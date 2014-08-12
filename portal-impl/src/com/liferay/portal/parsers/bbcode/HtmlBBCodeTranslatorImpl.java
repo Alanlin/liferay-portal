@@ -209,8 +209,8 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 	}
 
 	protected String extractData(
-		List<BBCodeItem> bbCodeItems, IntegerWrapper marker, String tag,
-		int type, boolean consume) {
+		List<BBCodeItem> bbCodeItems, IntegerWrapper marker, int type, 
+		boolean consume) {
 
 		StringBundler sb = new StringBundler();
 
@@ -225,8 +225,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 				sb.append(bbCodeItem.getValue());
 			}
 		}
-		while ((bbCodeItem.getType() != BBCodeParser.TYPE_TAG_END) &&
-			   !tag.equals(bbCodeItem.getValue()));
+		while (bbCodeItem.getType() != BBCodeParser.TYPE_TAG_END);
 
 		if (consume) {
 			marker.setValue(index - 1);
@@ -247,7 +246,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		sb.append("<tbody>");
 
 		String code = extractData(
-			bbCodeItems, marker, "code", BBCodeParser.TYPE_DATA, true);
+			bbCodeItems, marker, BBCodeParser.TYPE_DATA, true);
 
 		code = HtmlUtil.escape(code);
 		code = StringUtil.replace(code, StringPool.TAB, StringPool.FOUR_SPACES);
@@ -340,7 +339,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 		if (href == null) {
 			href = extractData(
-				bbCodeItems, marker, "email", BBCodeParser.TYPE_DATA, false);
+				bbCodeItems, marker, BBCodeParser.TYPE_DATA, false);
 		}
 
 		if (!href.startsWith("mailto:")) {
@@ -391,7 +390,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		int pos = marker.getValue();
 
 		String src = extractData(
-			bbCodeItems, marker, "img", BBCodeParser.TYPE_DATA, true);
+			bbCodeItems, marker, BBCodeParser.TYPE_DATA, true);
 
 		Matcher matcher = _imagePattern.matcher(src);
 
@@ -672,7 +671,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 		if (href == null) {
 			href = extractData(
-				bbCodeItems, marker, "url", BBCodeParser.TYPE_DATA, false);
+				bbCodeItems, marker, BBCodeParser.TYPE_DATA, false);
 		}
 
 		Matcher matcher = _urlPattern.matcher(href);
